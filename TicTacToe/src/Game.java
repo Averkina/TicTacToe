@@ -22,4 +22,11 @@ public class Game {
 		System.out.println(" ");
 	}
 
+	public boolean isIdleSell(int x, int y) {
+		if (board[x][y] != '*') {
+			return true;
+		}
+		return false;
+	}
+
 }

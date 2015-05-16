@@ -1,4 +1,4 @@
-public class Player {
+public class Player implements PlayerInterface {
 
 	private char figure;
 	private String namePlayer;
@@ -8,42 +8,57 @@ public class Player {
 		setNamePlayer(namePlayer);
 	}
 
+	@Override
 	public void setFigure(char figure) {
 		this.figure = figure;
 	}
 
+	@Override
 	public char getFigure() {
 		return figure;
 	}
 
+	@Override
 	public String getNamePlayer() {
 		return namePlayer;
 	}
 
+	@Override
 	public void setNamePlayer(String namePlayer) {
 		this.namePlayer = namePlayer;
 	}
 
-	public BoardSell turn(BoardSell sell) {
-		// sell.x;
-		// sell.y;
+	@Override
+	public void setArbitrator(ArbitratorInterface arbitrator) {
 
-		return sell;
 	}
 
-	public void win(Player player) {
-		System.out.println("Player win: " + player.getNamePlayer());
+	@Override
+	public void makeMove(Game game) {
+		double x = 0;
+		double y = 0;
+		do {
+			x = Math.random() * 3;
+			y = Math.random() * 3;
+		} while (game.isIdleSell((int) x, (int) y));
+		game.board[(int) x][(int) y] = getFigure();
 	}
 
-	public void loss(Player player) {
-		System.out.println("Player loss: " + player.getNamePlayer());
+	@Override
+	public void win() {
+		System.out.println("Draw player: " + getNamePlayer());
+
 	}
 
-	public void draw(Player player) {
-		System.out.println("Draw!!! " + player.getNamePlayer());
+	@Override
+	public void loss() {
+		System.out.println("Loss player: " + getNamePlayer());
+
 	}
 
-	public void updateGame(Game game) {
+	@Override
+	public void draw() {
+		System.out.println("Draw player: " + getNamePlayer());
 
 	}
 

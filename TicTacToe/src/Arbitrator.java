@@ -1,13 +1,22 @@
-public class Arbitrator {
+public class Arbitrator implements ArbitratorInterface {
 
-	Player[] player = new Player[2];
+	PlayerInterface player1;
+	PlayerInterface player2;
+
+	Arbitrator() {
+	}
+
+	Arbitrator(PlayerInterface player1, PlayerInterface player2) {
+		this.player1 = player1;
+		this.player2 = player2;
+	}
 
 	Boolean win = false;
 	Game game = new Game();
 
 	public void startGame() {
-		player[0] = new Player('x', "Maria");
-		player[1] = new Player('o', "Valery");
+		player1 = new Player('x', "Maria");
+		player2 = new Player('o', "Valery");
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				game.board[i][j] = ' ';
@@ -18,12 +27,12 @@ public class Arbitrator {
 	}
 
 	public void whoWin(Game game, int i, int j) {
-		if (player[0].getFigure() == 'x' && game.board[i][j] == 'x') {
-			player[0].win(player[0]);
-			player[1].loss(player[1]);
+		if (player1.getFigure() == 'x' && game.board[i][j] == 'x') {
+			player1.win();
+			player2.loss();
 		} else {
-			player[1].win(player[1]);
-			player[0].loss(player[0]);
+			player2.win();
+			player1.loss();
 		}
 		checkFinish();
 	}
@@ -72,19 +81,20 @@ public class Arbitrator {
 					x = (int) (Math.random() * 3);
 					y = (int) (Math.random() * 3);
 				} while (game.board[BoardSell.x = x][BoardSell.y = y] != '*');
-				game.board[BoardSell.x = x][BoardSell.y = y] = player[number]
-						.getFigure();
-				game.printTurn(game.board);
-				player[number].updateGame(game);
-				checkBoard(game);
-				if (number == 0) {
-					number = 1;
+				if (number == 1) {
+					player1.makeMove(game);
+					number = 2;
+					playerMoved(game);
 				} else {
-					number = 0;
+					player2.makeMove(game);
+					number = 1;
+					playerMoved(game);
 				}
-			} else if (!win) {
-				player[0].draw(player[0]);
-				player[1].draw(player[1]);
+				game.printTurn(game.board);
+				checkBoard(game);
+			} else {
+				player1.draw();
+				player2.draw();
 				win = true;
 			}
 		}
@@ -106,5 +116,11 @@ public class Arbitrator {
 			nextTurn();
 		}
 		System.out.println("Game end");
+	}
+
+	@Override
+	public void playerMoved(Game game) {
+		// TODO Auto-generated method stub
+
 	}
 }
