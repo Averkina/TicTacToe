@@ -29,7 +29,7 @@ public class HumanPlayer implements PlayerInterface {
 					System.out
 							.println("Such cell doesn't exist. Choose another, please! It can be 0, 1 or 2.");
 					flag = false;
-				} else if (!game.isIdleSell(x, y)) {
+				} else if (!game.isNotEmptyCell(x, y)) {
 					game.board[x][y] = getFigure();
 					flag = true;
 				} else {
@@ -43,6 +43,8 @@ public class HumanPlayer implements PlayerInterface {
 				flag = false;
 			}
 		}
+		game.printBoard();
+		arbitrator.updateBoardAfterPlayerTurn(game);
 	}
 
 	@Override

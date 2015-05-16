@@ -5,6 +5,8 @@ public class Main {
 		HumanPlayer humanPlayer = new HumanPlayer('o', "Valery");
 		ComputerPlayer computerPlayer = new ComputerPlayer('x', "Maria");
 		Arbitrator arbitrator = new Arbitrator(humanPlayer, computerPlayer);
+		humanPlayer.setArbitrator(arbitrator);
+		computerPlayer.setArbitrator(arbitrator);
 		arbitrator.startGame();
 	}
 }

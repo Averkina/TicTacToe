@@ -1,5 +1,5 @@
 public interface ArbitratorInterface {
 
-	void playerMoved(Game game);
+	void updateBoardAfterPlayerTurn(Game game);
 
 }

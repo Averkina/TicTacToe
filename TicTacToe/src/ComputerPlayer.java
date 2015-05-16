@@ -2,19 +2,12 @@ public class ComputerPlayer implements PlayerInterface {
 
 	private char figure;
 	private String namePlayer;
+	ArbitratorInterface arbitrator;
 
 	public ComputerPlayer(char figure, String namePlayer) {
 		setFigure(figure);
 		setNamePlayer(namePlayer);
 	}
-
-	ArbitratorInterface arbitrator = new ArbitratorInterface() {
-
-		@Override
-		public void playerMoved(Game game) {
-
-		}
-	};
 
 	@Override
 	public void makeMove(Game game) {
@@ -23,8 +16,9 @@ public class ComputerPlayer implements PlayerInterface {
 		do {
 			x = Math.random() * 3;
 			y = Math.random() * 3;
-		} while (game.isIdleSell((int) x, (int) y));
+		} while (game.isNotEmptyCell((int) x, (int) y));
 		game.board[(int) x][(int) y] = getFigure();
+		arbitrator.updateBoardAfterPlayerTurn(game);
 	}
 
 	@Override
