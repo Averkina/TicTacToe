@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Game {
 
 	char board[][] = new char[3][3];
@@ -40,4 +43,17 @@ public class Game {
 		return false;
 	}
 
+	public final static Map<Integer, Integer[]> numpad = new HashMap<Integer, Integer[]>() {
+		{
+			put(1, new Integer[] { 2, 0 });
+			put(2, new Integer[] { 2, 1 });
+			put(3, new Integer[] { 2, 2 });
+			put(4, new Integer[] { 1, 0 });
+			put(5, new Integer[] { 1, 1 });
+			put(6, new Integer[] { 1, 2 });
+			put(7, new Integer[] { 0, 0 });
+			put(8, new Integer[] { 0, 1 });
+			put(9, new Integer[] { 0, 2 });
+		}
+	};
 }

@@ -15,8 +15,6 @@ public class Arbitrator implements ArbitratorInterface {
 	Game game = new Game();
 
 	public void startGame() {
-		player1 = new Player('x', "Maria");
-		player2 = new Player('o', "Valery");
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				game.board[i][j] = ' ';
