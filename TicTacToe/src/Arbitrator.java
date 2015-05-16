@@ -71,16 +71,9 @@ public class Arbitrator implements ArbitratorInterface {
 
 	public void nextTurn() {
 
-		BoardSell BoardSell = new BoardSell();
-		int number = 0;
+		int number = 1;
 		while (!win) {
-			if (checkEmptyCells(game.board)) {
-				int x = 0;
-				int y = 0;
-				do {
-					x = (int) (Math.random() * 3);
-					y = (int) (Math.random() * 3);
-				} while (game.board[BoardSell.x = x][BoardSell.y = y] != '*');
+			if (game.checkEmptyCells(game.board)) {
 				if (number == 1) {
 					player1.makeMove(game);
 					number = 2;
