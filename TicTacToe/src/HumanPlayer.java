@@ -44,7 +44,16 @@ public class HumanPlayer implements PlayerInterface {
 			}
 		}
 		game.printBoard();
-		arbitrator.updateBoardAfterPlayerTurn(game);
+
+		class AnotherThread implements Runnable {
+
+			public void run() {
+				arbitrator.updateBoardAfterPlayerTurn(game);
+			}
+		}
+
+		Thread t = new Thread(new AnotherThread());
+		t.start();
 	}
 
 	@Override

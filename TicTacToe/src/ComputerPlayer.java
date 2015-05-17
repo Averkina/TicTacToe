@@ -18,7 +18,16 @@ public class ComputerPlayer implements PlayerInterface {
 			y = Math.random() * 3;
 		} while (game.isNotEmptyCell((int) x, (int) y));
 		game.board[(int) x][(int) y] = getFigure();
-		arbitrator.updateBoardAfterPlayerTurn(game);
+
+		class AnotherThread implements Runnable {
+
+			public void run() {
+				arbitrator.updateBoardAfterPlayerTurn(game);
+			}
+		}
+
+		Thread t = new Thread(new AnotherThread());
+		t.start();
 	}
 
 	@Override
