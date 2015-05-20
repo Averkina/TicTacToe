@@ -15,6 +15,16 @@ public class Game {
 		System.out.println(" ");
 	}
 
+	public Game(String str) {
+		int position = 0;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				board[i][j] = str.charAt(position);
+				position++;
+			}
+		}
+	}
+
 	public void printBoard() {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -41,6 +51,16 @@ public class Game {
 			}
 		}
 		return false;
+	}
+
+	public String convertToString(Game game) {
+		StringBuilder string = new StringBuilder();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				string.append(board[i][j]);
+			}
+		}
+		return string.toString();
 	}
 
 	public final static Map<Integer, Integer[]> numpad = new HashMap<Integer, Integer[]>() {

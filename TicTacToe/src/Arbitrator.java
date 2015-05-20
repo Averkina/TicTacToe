@@ -13,11 +13,6 @@ public class Arbitrator implements ArbitratorInterface {
 
 	Boolean endGame = false;
 	Boolean activePlayer1 = true;
-	Game game = new Game();
-
-	public void startGame() {
-		checkFinish();
-	}
 
 	public void whoWin(Game game, int i, int j) {
 		if (player1.getFigure() == 'x' && game.board[i][j] == 'x') {
@@ -30,6 +25,7 @@ public class Arbitrator implements ArbitratorInterface {
 	}
 
 	public void checkBoard(Game game) {
+
 		for (int i = 0; i < 3; i++) {
 			if (game.board[0][i] == game.board[1][i]
 					&& game.board[1][i] == game.board[2][i]
@@ -61,7 +57,7 @@ public class Arbitrator implements ArbitratorInterface {
 		}
 	}
 
-	public void turn() {
+	public void turn(Game game) {
 		if (activePlayer1) {
 			activePlayer1 = false;
 			player1.makeMove(game);
@@ -71,11 +67,11 @@ public class Arbitrator implements ArbitratorInterface {
 		}
 	}
 
-	public void checkFinish() {
+	public void checkFinish(Game game) {
 		checkBoard(game);
 		if (!endGame) {
 			if (game.hasEmptyCell()) {
-				turn();
+				turn(game);
 			} else {
 				player1.draw();
 				player2.draw();
@@ -86,6 +82,11 @@ public class Arbitrator implements ArbitratorInterface {
 
 	@Override
 	public void updateBoardAfterPlayerTurn(Game game) {
-		checkFinish();
+		checkFinish(game);
+	}
+
+	@Override
+	public void startGame() {
+		checkFinish(new Game());
 	}
 }

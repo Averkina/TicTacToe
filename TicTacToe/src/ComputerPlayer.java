@@ -2,7 +2,7 @@ public class ComputerPlayer implements PlayerInterface {
 
 	private char figure;
 	private String namePlayer;
-	ArbitratorInterface arbitrator;
+	private ArbitratorInterface arbitrator;
 
 	public ComputerPlayer(char figure, String namePlayer) {
 		setFigure(figure);
@@ -18,16 +18,7 @@ public class ComputerPlayer implements PlayerInterface {
 			y = Math.random() * 3;
 		} while (game.isNotEmptyCell((int) x, (int) y));
 		game.board[(int) x][(int) y] = getFigure();
-
-		class AnotherThread implements Runnable {
-
-			public void run() {
-				arbitrator.updateBoardAfterPlayerTurn(game);
-			}
-		}
-
-		Thread t = new Thread(new AnotherThread());
-		t.start();
+		arbitrator.updateBoardAfterPlayerTurn(game);
 	}
 
 	@Override
