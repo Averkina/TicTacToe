@@ -1,17 +1,16 @@
 public class Main {
 
 	public static void main(String[] args) throws Throwable {
+		Lobby lobby = new Lobby();
 
-		PlayerServer ps1 = new PlayerServer();
-		ComputerPlayer computerPlayer = new ComputerPlayer('x', "Maria");
-		Arbitrator arbitrator = new Arbitrator(ps1, computerPlayer);
-		ps1.setArbitrator(arbitrator);
-		computerPlayer.setArbitrator(arbitrator);
+		PlayerInterface computerPlayer = new ComputerPlayer('x', "Maria");
+		PlayerClient pcComputer = new PlayerClient(computerPlayer);
+		computerPlayer.setArbitrator(pcComputer);
 
-		HumanPlayer humanPlayer = new HumanPlayer('o', "Valery");
-		PlayerClient pc = new PlayerClient(humanPlayer);
-		humanPlayer.setArbitrator(pc);
+		// PlayerInterface humanPlayer = new ComputerPlayer('o', "Maria2");
+		PlayerInterface humanPlayer = new HumanPlayer('o', "Valery");
+		PlayerClient pcHuman = new PlayerClient(humanPlayer);
+		humanPlayer.setArbitrator(pcHuman);
 
-		arbitrator.startGame();
 	}
 }

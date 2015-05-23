@@ -1,7 +1,6 @@
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -9,9 +8,11 @@ public class PlayerServer implements PlayerInterface {
 
 	public static final int PORT = 8002;
 	private ServerGame serverSend;
+	private Socket socket;
 
-	PlayerServer() {
+	PlayerServer(Socket socket) {
 		this.serverSend = new ServerGame();
+		this.socket = socket;
 		Thread t = new Thread(serverSend);
 		t.start();
 		System.out.println("START SERVER");
@@ -20,10 +21,8 @@ public class PlayerServer implements PlayerInterface {
 	private class ServerGame implements Runnable {
 		private InputStream inStream;
 		private OutputStream outStream;
-		private Socket socket;
 		private PrintWriter out;
 		private Scanner scaner;
-		private ServerSocket serverSocket;
 
 		@Override
 		public void run() {
@@ -31,8 +30,6 @@ public class PlayerServer implements PlayerInterface {
 			try {
 
 				try {
-					serverSocket = new ServerSocket(PORT);
-					socket = serverSocket.accept();
 					inStream = socket.getInputStream();
 					outStream = socket.getOutputStream();
 					out = new PrintWriter(outStream);

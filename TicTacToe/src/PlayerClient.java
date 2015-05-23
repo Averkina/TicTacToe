@@ -27,7 +27,6 @@ public class PlayerClient implements ArbitratorInterface {
 		@Override
 		public void run() {
 			try {
-				System.out.println("CLIENT START2");
 				socket = new Socket("127.0.0.1", PlayerServer.PORT);
 				inStream = socket.getInputStream();
 				outStream = socket.getOutputStream();
