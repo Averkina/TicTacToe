@@ -2,13 +2,12 @@ import java.util.Scanner;
 
 public class HumanPlayer implements PlayerInterface {
 
-	private char figure;
-	private String namePlayer;
 	private ArbitratorInterface arbitrator;
+	private String namePlayer;
+	private char figure;
 
-	public HumanPlayer(char figure, String namePlayer) {
-		setFigure(figure);
-		setNamePlayer(namePlayer);
+	public HumanPlayer() {
+		namePlayer = getNamePlayer();
 
 	}
 
@@ -30,7 +29,7 @@ public class HumanPlayer implements PlayerInterface {
 							.println("Such cell doesn't exist. Choose another, please! It can be 0, 1 or 2.");
 					flag = false;
 				} else if (!game.isNotEmptyCell(x, y)) {
-					game.board[x][y] = getFigure();
+					game.board[x][y] = figure;
 					flag = true;
 				} else {
 					System.out
@@ -46,39 +45,31 @@ public class HumanPlayer implements PlayerInterface {
 		arbitrator.updateBoardAfterPlayerTurn(game);
 	}
 
+	public String getNamePlayer() {
+		System.out.println("Player, enter your name, please:");
+		Scanner sc = new Scanner(System.in);
+		String inputName = sc.nextLine();
+		return inputName;
+	}
+
 	@Override
 	public void win() {
-		System.out.println("Player win: " + getNamePlayer());
+		System.out.println("Player win: " + namePlayer);
 	}
 
 	@Override
 	public void loss() {
-		System.out.println("Player loss: " + getNamePlayer());
+		System.out.println("Player loss: " + namePlayer);
 	}
 
 	@Override
 	public void draw() {
-		System.out.println("Draw!!! " + getNamePlayer());
-	}
-
-	@Override
-	public char getFigure() {
-		return figure;
-	}
-
-	@Override
-	public String getNamePlayer() {
-		return namePlayer;
+		System.out.println("Draw!!! " + namePlayer);
 	}
 
 	@Override
 	public void setFigure(char figure) {
 		this.figure = figure;
-	}
-
-	@Override
-	public void setNamePlayer(String namePlayer) {
-		this.namePlayer = namePlayer;
 	}
 
 	@Override

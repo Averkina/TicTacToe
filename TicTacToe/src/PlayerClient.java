@@ -40,10 +40,8 @@ public class PlayerClient implements ArbitratorInterface {
 						player.makeMove(game);
 					}
 					if (line.startsWith("setFigure")) {
-						player.setFigure(player.getFigure());
-					}
-					if (line.startsWith("setNamePlayer")) {
-						player.setNamePlayer(player.getNamePlayer());
+						String figureString = line.substring(9);
+						player.setFigure(figureString.charAt(0));
 					}
 					if (line.startsWith("win")) {
 						player.win();
@@ -80,4 +78,5 @@ public class PlayerClient implements ArbitratorInterface {
 	@Override
 	public void startGame() {
 	}
+
 }

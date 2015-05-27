@@ -26,6 +26,7 @@ public class Lobby {
 						playerServers[1]);
 				playerServers[0].setArbitrator(arbitrator);
 				playerServers[1].setArbitrator(arbitrator);
+
 				arbitrator.startGame();
 				countPlayer = 0;
 			} catch (IOException e) {

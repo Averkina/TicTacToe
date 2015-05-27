@@ -1,12 +1,9 @@
 public class ComputerPlayer implements PlayerInterface {
 
 	private char figure;
-	private String namePlayer;
 	private ArbitratorInterface arbitrator;
 
-	public ComputerPlayer(char figure, String namePlayer) {
-		setFigure(figure);
-		setNamePlayer(namePlayer);
+	public ComputerPlayer() {
 	}
 
 	@Override
@@ -17,8 +14,12 @@ public class ComputerPlayer implements PlayerInterface {
 			x = Math.random() * 3;
 			y = Math.random() * 3;
 		} while (game.isNotEmptyCell((int) x, (int) y));
-		game.board[(int) x][(int) y] = getFigure();
+		game.board[(int) x][(int) y] = figure;
 		arbitrator.updateBoardAfterPlayerTurn(game);
+	}
+
+	public String getNamePlayer() {
+		return "Computer";
 	}
 
 	@Override
@@ -36,23 +37,8 @@ public class ComputerPlayer implements PlayerInterface {
 	}
 
 	@Override
-	public char getFigure() {
-		return figure;
-	}
-
-	@Override
-	public String getNamePlayer() {
-		return namePlayer;
-	}
-
-	@Override
 	public void setFigure(char figure) {
 		this.figure = figure;
-	}
-
-	@Override
-	public void setNamePlayer(String namePlayer) {
-		this.namePlayer = namePlayer;
 	}
 
 	@Override

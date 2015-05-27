@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class PlayerServer implements PlayerInterface {
 
-	public static final int PORT = 8002;
+	public static final int PORT = 8003;
 	private ServerGame serverSend;
 	private Socket socket;
 
@@ -63,29 +63,10 @@ public class PlayerServer implements PlayerInterface {
 	}
 
 	private ArbitratorInterface arbitrator;
-	private char figure;
-	private String namePlayer;
-
-	@Override
-	public char getFigure() {
-		return figure;
-	}
-
-	@Override
-	public String getNamePlayer() {
-		return namePlayer;
-	}
 
 	@Override
 	public void setFigure(char figure) {
-		this.figure = figure;
-		serverSend.send("setFigure " + figure);
-	}
-
-	@Override
-	public void setNamePlayer(String namePlayer) {
-		this.namePlayer = namePlayer;
-		serverSend.send("setNamePlayer " + namePlayer);
+		serverSend.send("setFigure" + figure);
 	}
 
 	@Override

@@ -3,12 +3,13 @@ import java.util.Map;
 
 public class Game {
 
+	public static final char EMPTY = '*';
 	char board[][] = new char[3][3];
 
 	Game() {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				System.out.print(board[i][j] = '*');
+				System.out.print(board[i][j] = EMPTY);
 			}
 			System.out.println(" ");
 		}
@@ -36,7 +37,7 @@ public class Game {
 	}
 
 	public boolean isNotEmptyCell(int x, int y) {
-		if (board[x][y] != '*') {
+		if (board[x][y] != EMPTY) {
 			return true;
 		}
 		return false;
@@ -45,7 +46,7 @@ public class Game {
 	public boolean hasEmptyCell() {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				if (board[i][j] == '*') {
+				if (board[i][j] == EMPTY) {
 					return true;
 				}
 			}

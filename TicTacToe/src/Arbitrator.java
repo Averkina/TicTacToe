@@ -3,9 +3,6 @@ public class Arbitrator implements ArbitratorInterface {
 	PlayerInterface player1;
 	PlayerInterface player2;
 
-	Arbitrator() {
-	}
-
 	Arbitrator(PlayerInterface player1, PlayerInterface player2) {
 		this.player1 = player1;
 		this.player2 = player2;
@@ -13,9 +10,11 @@ public class Arbitrator implements ArbitratorInterface {
 
 	Boolean endGame = false;
 	Boolean activePlayer1 = true;
+	private static final char figurePlayer1 = 'x';
+	private static final char figurePlayer2 = 'o';
 
 	public void whoWin(Game game, int i, int j) {
-		if (player1.getFigure() == 'x' && game.board[i][j] == 'x') {
+		if (game.board[i][j] == figurePlayer1) {
 			player1.win();
 			player2.loss();
 		} else {
@@ -29,14 +28,14 @@ public class Arbitrator implements ArbitratorInterface {
 		for (int i = 0; i < 3; i++) {
 			if (game.board[0][i] == game.board[1][i]
 					&& game.board[1][i] == game.board[2][i]
-					&& game.board[0][i] != '*') {
+					&& game.board[0][i] != Game.EMPTY) {
 				endGame = true;
 				whoWin(game, 0, i);
 				break;
 			}
 			if (game.board[i][0] == game.board[i][1]
 					&& game.board[i][1] == game.board[i][2]
-					&& game.board[i][0] != '*') {
+					&& game.board[i][0] != Game.EMPTY) {
 				endGame = true;
 				whoWin(game, i, 0);
 				break;
@@ -45,13 +44,13 @@ public class Arbitrator implements ArbitratorInterface {
 
 		if (game.board[0][0] == game.board[1][1]
 				&& game.board[1][1] == game.board[2][2]
-				&& game.board[1][1] != '*') {
+				&& game.board[1][1] != Game.EMPTY) {
 			endGame = true;
 			whoWin(game, 0, 0);
 		}
 		if (game.board[0][2] == game.board[1][1]
 				&& game.board[1][1] == game.board[2][0]
-				&& game.board[1][1] != '*') {
+				&& game.board[1][1] != Game.EMPTY) {
 			endGame = true;
 			whoWin(game, 1, 1);
 		}
@@ -87,6 +86,9 @@ public class Arbitrator implements ArbitratorInterface {
 
 	@Override
 	public void startGame() {
+		player1.setFigure(figurePlayer1);
+		player2.setFigure(figurePlayer2);
 		checkFinish(new Game());
 	}
+
 }
