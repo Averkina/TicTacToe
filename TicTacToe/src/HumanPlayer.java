@@ -13,6 +13,7 @@ public class HumanPlayer implements PlayerInterface {
 
 	@Override
 	public void makeMove(Game game) {
+		game.printBoard();
 		System.out.println("Player, make to move:");
 		int x = 0;
 		int y = 0;
@@ -42,6 +43,7 @@ public class HumanPlayer implements PlayerInterface {
 				flag = false;
 			}
 		}
+		game.printBoard();
 		arbitrator.updateBoardAfterPlayerTurn(game);
 	}
 

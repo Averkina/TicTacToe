@@ -1,97 +1,57 @@
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.Observable;
+import java.util.Observer;
 
-public class PlayerServer implements PlayerInterface {
+public class PlayerServer implements PlayerInterface, Observer {
 
 	public static final int PORT = 8003;
-	private ServerGame serverSend;
-	private Socket socket;
+	private Transport transport;
 
 	PlayerServer(Socket socket) {
-		this.serverSend = new ServerGame();
-		this.socket = socket;
-		Thread t = new Thread(serverSend);
-		t.start();
-		System.out.println("START SERVER");
-	}
-
-	private class ServerGame implements Runnable {
-		private InputStream inStream;
-		private OutputStream outStream;
-		private PrintWriter out;
-		private Scanner scaner;
-
-		@Override
-		public void run() {
-
-			try {
-
-				try {
-					inStream = socket.getInputStream();
-					outStream = socket.getOutputStream();
-					out = new PrintWriter(outStream);
-					scaner = new Scanner(inStream);
-					while (scaner.hasNextLine()) {
-						String line = scaner.nextLine();
-						if (line.startsWith("updateBoardAfterPlayerTurn")) {
-							String gameString = line.substring(26);
-							Game game = new Game(gameString);
-							arbitrator.updateBoardAfterPlayerTurn(game);
-							game.printBoard();
-						}
-					}
-				} finally {
-					socket.close();
-				}
-			} catch (RuntimeException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		public void send(String outString) {
-			while (out == null) {
-				Thread.yield();
-			}
-			out.println(outString);
-			out.flush();
-		}
+		transport = new Transport(socket);
+		transport.addObserver(this);
 	}
 
 	private ArbitratorInterface arbitrator;
 
 	@Override
 	public void setFigure(char figure) {
-		serverSend.send("setFigure" + figure);
+		transport.send("setFigure" + figure);
 	}
 
 	@Override
 	public void makeMove(Game game) {
-		serverSend.send("makeMove" + game.convertToString(game));
+		transport.send("makeMove" + game.convertToString(game));
 	}
 
 	@Override
 	public void win() {
-		serverSend.send("win");
+		transport.send("win");
 	}
 
 	@Override
 	public void loss() {
-		serverSend.send("loss");
+		transport.send("loss");
 	}
 
 	@Override
 	public void draw() {
-		serverSend.send("draw");
+		transport.send("draw");
 	}
 
 	@Override
 	public void setArbitrator(ArbitratorInterface arbitratorInterface) {
 		this.arbitrator = arbitratorInterface;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		String line = (String) arg;
+		if (line.startsWith("updateBoardAfterPlayerTurn")) {
+			String gameString = line.substring(26);
+			Game game = new Game(gameString);
+			arbitrator.updateBoardAfterPlayerTurn(game);
+		}
 	}
 
 }
